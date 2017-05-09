@@ -18,9 +18,9 @@ const (
 func (u *User) String() string {
 	cards := []byte{}
 	for _, v := range u.Hands {
-		cards = append(cards, []byte(" " + v.Number)...)
+		cards = append(cards, []byte(fmt.Sprintf(" %d",v.Number))...)
 	}
-	return fmt.Sprintf("%s [ %d cows] (%s )",u.Name, u.Cows, cards)
+	return fmt.Sprintf("%s [%d cows] (%s )",u.Name, u.Cows, cards)
 }
 
 func NewUser(name string) *User {
@@ -52,7 +52,7 @@ func (u *User) Put(number int) (Card ,error) {
 		}
 	}
 
-	return Card{}, errors.New("The number " + number + " is not in this hands")
+	return Card{}, errors.New(fmt.Sprintf("The number %d is not in this hands", number))
 }
 
 func deleteCard(hands []Card, card int) []Card {
