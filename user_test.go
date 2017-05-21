@@ -5,15 +5,15 @@ import (
 )
 
 func TestNewUser(t *testing.T) {
-	user := NewUser("test")
+	user := NewUser("test", 0)
 
-	if user.String() != "test [0 cows] ( )" {
+	if user.String() != "test(0) [0 cows] ( )" {
 		t.Error(user.String() + " is wrong Output")
 	}
 }
 
 func TestUserBehavior(t *testing.T) {
-	user := NewUser("test")
+	user := NewUser("test", 0)
 
 	user.TakeCows(3)
 	if user.Cows != 3 {
@@ -24,7 +24,7 @@ func TestUserBehavior(t *testing.T) {
 	if err != nil {
 		t.Error(err.Error())
 	}
-	if user.String() != "test [3 cows] ( 55 )" {
+	if user.String() != "test(0) [3 cows] ( 55 )" {
 		t.Error("Draw Error. " + user.String() + " is wrong output")
 	}
 
@@ -39,7 +39,7 @@ func TestUserBehavior(t *testing.T) {
 		t.Error("Put Error")
 	}
 
-	if user.String() != "test [3 cows] ( 33 12 )" {
+	if user.String() != "test(0) [3 cows] ( 33 12 )" {
 		t.Error("Put Error")
 	}
 

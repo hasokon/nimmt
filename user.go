@@ -7,6 +7,7 @@ import (
 
 type User struct {
 	Name  string
+	ID int
 	Cows  int
 	Hands []Card
 }
@@ -20,12 +21,13 @@ func (u *User) String() string {
 	for _, v := range u.Hands {
 		cards = append(cards, []byte(fmt.Sprintf(" %d",v.Number))...)
 	}
-	return fmt.Sprintf("%s [%d cows] (%s )",u.Name, u.Cows, cards)
+	return fmt.Sprintf("%s(%d) [%d cows] (%s )",u.Name, u.ID, u.Cows, cards)
 }
 
-func NewUser(name string) *User {
+func NewUser(name string, id int) *User {
 	return &User{
 		Name : name,
+		ID : id,
 		Cows : 0,
 		Hands : make([]Card, 0),
 	}
