@@ -146,4 +146,13 @@ func TestFieldAdd(t *testing.T) {
 	if field.String() != "[( 91 ),( 79 85 90 ),( 89 ),( 12 )]" {
 		t.Error(field.String() + " is Wrong Output")
 	}
+
+	card = Card{11, 3}
+	num, ok = field.Add(card)
+	if !ok {
+		t.Errorf("Field Add Error. Add Card is %v. Number : %d\n", card, num)
+	}
+	if field.String() != "[( 91 ),( 79 85 90 ),( 89 ),( 11 )]" {
+		t.Error(field.String() + " is Wrong Output\n")
+	}
 }

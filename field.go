@@ -64,6 +64,18 @@ func (c *Column) Add(newCard Card) (int, bool) {
 	return cows, false
 }
 
+func (c *Column) AllChange(newCard Card) int {
+	cows := 0
+	for _, card := range c.Cards {
+		cows += card.Cows
+	}
+
+	c.Cards[0] = newCard
+	c.Count = 1
+
+	return cows
+}
+
 type Field struct {
 	Columns []*Column
 }
@@ -111,5 +123,5 @@ func (f *Field) Add(newCard Card) (int, bool) {
 			return column.Add(newCard)
 		}
 	}
-	return -1, false
+	return f.Columns[len(f.Columns)-1].AllChange(newCard), true
 }
