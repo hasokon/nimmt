@@ -1,14 +1,14 @@
 package nimmt
 
 import (
-	"fmt"
 	"errors"
-	)
+	"fmt"
+)
 
 type Room struct {
-	Name string
-	ID int
-	Users     []User
+	Name      string
+	ID        int
+	Users     []*User
 	PlayField *Field
 	Round     int
 	IsPlaying bool
@@ -16,27 +16,31 @@ type Room struct {
 
 const (
 	USER_LIM = 10
-	)
+)
 
-func NewRoom() *Room {
+func NewRoom(name string, id int) *Room {
 	return &Room{
-		Users : make([]User,0),
-		PlayField : nil,
-		Round : 0,
-		IsPlaying : false,
+		Name : name,
+		ID: id,
+		Users:     make([]*User, 0),
+		PlayField: nil,
+		Round:     0,
+		IsPlaying: false,
 	}
 }
 
 func (r *Room) String() string {
 	status := ""
-	switch(r.IsPlaying) {
-		case true : status = "Playing"
-		case false : status = "Not Playing"
+	switch r.IsPlaying {
+	case true:
+		status = "Playing"
+	case false:
+		status = "Not Playing"
 	}
 	return fmt.Sprintf("Room<Name: %s, ID: %d> %d users status:%s", r.Name, r.ID, len(r.Users), status)
 }
 
-func (r *Room) AddUser(user User) error {
+func (r *Room) AddUser(user *User) error {
 	if r.IsPlaying {
 		return errors.New("This Room has already started a game")
 	}
@@ -51,7 +55,7 @@ func (r *Room) AddUser(user User) error {
 
 func (r *Room) DeleteUserByID(userId int) {
 	origin := r.Users
-	r.Users = make([]User, 0)
+	r.Users = make([]*User, 0)
 
 	for _, user := range origin {
 		if user.ID != userId {
@@ -78,5 +82,15 @@ func (r *Room) Start() error {
 	}
 
 	r.IsPlaying = true
+
+	Shuffle(CardSet)
+	currentCardPoint := 0
+	for i := 0; i < HANDS; i++ {
+		for _, user := range r.Users {
+			user.Draw(CardSet[currentCardPoint])
+			currentCardPoint++
+		}
+	}
+
 	return nil
 }
