@@ -20,7 +20,7 @@ func TestUserBehavior(t *testing.T) {
 		t.Error("TakeCows Error")
 	}
 
-	err := user.Draw(Card{55,5})
+	err := user.Draw(Card{55, 5})
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -28,8 +28,8 @@ func TestUserBehavior(t *testing.T) {
 		t.Error("Draw Error. " + user.String() + " is wrong output")
 	}
 
-	user.Draw(Card{33,5})
-	user.Draw(Card{12,2})
+	user.Draw(Card{33, 5})
+	user.Draw(Card{12, 2})
 
 	card, err := user.Put(55)
 	if err != nil {
